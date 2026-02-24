@@ -51,16 +51,28 @@ window.buscarPreco = async function () {
   const buscaSelect = document.getElementById("buscaProduto")
 
   if (!buscaSelect) {
-    console.log("Elemento de busca não encontrado")
+    console.log("Elemento não encontrado")
     return
   }
 
   const produto = buscaSelect.value
 
+  console.log("Produto buscado:", produto)
+
   if (!produto) {
-    alert("Selecione um produto para buscar")
+    alert("Selecione um produto")
     return
   }
+
+  const { data, error } = await supabase
+    .from("precos")
+    .select("*")
+    .eq("produto", produto)
+    .order("preco", { ascending: true })
+
+  console.log("Resultado:", data)
+
+}
 
   const { data, error } = await supabase
     .from("precos")
