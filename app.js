@@ -49,8 +49,9 @@ window.adicionarPreco = async function () {
 window.buscarPreco = async function () {
 
   const buscaSelect = document.getElementById("buscaProduto")
+  const resultadoDiv = document.getElementById("resultado")
 
-  if (!buscaSelect) {
+  if (!buscaSelect || !resultadoDiv) {
     console.log("Elemento não encontrado")
     return
   }
@@ -70,25 +71,9 @@ window.buscarPreco = async function () {
     .eq("produto", produto)
     .order("preco", { ascending: true })
 
-  console.log("Resultado:", data)
-
-}
-
-  const { data, error } = await supabase
-    .from("precos")
-    .select("*")
-    .eq("produto", produto)
-
   if (error) {
-    alert("Erro ao buscar")
     console.log(error)
-    return
-  }
-
-  const resultadoDiv = document.getElementById("resultado")
-
-  if (!resultadoDiv) {
-    console.log("Div resultado não encontrada")
+    alert("Erro ao buscar")
     return
   }
 
@@ -99,19 +84,21 @@ window.buscarPreco = async function () {
 
   let html = ""
 
-data.forEach((item, index) => {
-  if (index === 0) {
-    html += `
-      <p style="color: green; font-weight: bold;">
-        🏆 ${item.mercado} - R$ ${item.preco.toFixed(2)}
-      </p>
-    `
-  } else {
-    html += `
-      <p>
-        ${item.mercado} - R$ ${item.preco.toFixed(2)}
-      </p>
-    `
-  }
-})
+  data.forEach((item, index) => {
+    if (index === 0) {
+      html += `
+        <p style="color: green; font-weight: bold;">
+          🏆 ${item.mercado} - R$ ${item.preco.toFixed(2)}
+        </p>
+      `
+    } else {
+      html += `
+        <p>
+          ${item.mercado} - R$ ${item.preco.toFixed(2)}
+        </p>
+      `
+    }
+  })
+
+  resultadoDiv.innerHTML = html
 }
