@@ -87,13 +87,18 @@ window.buscarPreco = async function () {
 
   let html = ""
 
-  data.forEach(item => {
+data.forEach((item, index) => {
+  if (index === 0) {
     html += `
-      <p>
-        <strong>${item.mercado}</strong> - R$ ${item.preco.toFixed(2)}
+      <p style="color: green; font-weight: bold;">
+        🏆 ${item.mercado} - R$ ${item.preco.toFixed(2)}
       </p>
     `
-  })
-
-  resultadoDiv.innerHTML = html
-}
+  } else {
+    html += `
+      <p>
+        ${item.mercado} - R$ ${item.preco.toFixed(2)}
+      </p>
+    `
+  }
+})
