@@ -5,9 +5,16 @@ const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZS
 const supabase = createClient(supabaseUrl, supabaseKey)
 
 window.adicionarPreco = async function () {
+
   const produto = document.getElementById('produto').value
   const mercado = document.getElementById('mercado').value
   const preco = parseFloat(document.getElementById('preco').value)
+
+  // 🔥 COLOCA A VALIDAÇÃO AQUI
+  if (!produto || !mercado || !preco) {
+    alert("Preencha todos os campos")
+    return
+  }
 
   const { error } = await supabase
     .from('precos')
@@ -20,12 +27,6 @@ window.adicionarPreco = async function () {
     alert("Preço salvo!")
   }
 }
-
-if (!produto || !mercado || !preco) {
-  alert("Preencha todos os campos")
-  return
-}
-
 window.buscarPreco = async function () {
   const nome = document.getElementById('buscarProduto').value
 
