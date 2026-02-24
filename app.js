@@ -102,3 +102,4 @@ data.forEach((item, index) => {
     `
   }
 })
+}
