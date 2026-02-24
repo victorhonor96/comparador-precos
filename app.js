@@ -4,56 +4,96 @@ const supabaseUrl = 'https://zuupkhhvcrjzwkgwwtgz.supabase.co'
 const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inp1dXBraGh2Y3JqendrZ3d3dGd6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzE5NDg3MTcsImV4cCI6MjA4NzUyNDcxN30.KJiStEORy4v9egIiPsbK5qy_KS4GPwYSypFEZ3494zw'
 const supabase = createClient(supabaseUrl, supabaseKey)
 
+// ===============================
+// 🔥 ADICIONAR PREÇO
+// ===============================
 window.adicionarPreco = async function () {
 
-  const produto = document.getElementById('produto').value
-  const mercado = document.getElementById('mercado').value
-  const preco = parseFloat(document.getElementById('preco').value)
+  const produtoSelect = document.getElementById("produto")
+  const mercadoInput = document.getElementById("mercado")
+  const precoInput = document.getElementById("preco")
 
-  // 🔥 COLOCA A VALIDAÇÃO AQUI
-  if (!produto || !mercado || !preco) {
-    alert("Preencha todos os campos")
+  if (!produtoSelect || !mercadoInput || !precoInput) {
+    console.log("Algum elemento não foi encontrado")
     return
   }
 
-if (!produto || !mercado || isNaN(preco)) {
-  alert("Preencha todos os campos corretamente")
-  return
-}
-  
+  const produto = produtoSelect.value
+  const mercado = mercadoInput.value
+  const preco = parseFloat(precoInput.value)
+
+  if (!produto || !mercado || isNaN(preco)) {
+    alert("Preencha todos os campos corretamente")
+    return
+  }
+
   const { error } = await supabase
-    .from('precos')
+    .from("precos")
     .insert([{ produto, mercado, preco }])
 
   if (error) {
     alert("Erro ao salvar")
     console.log(error)
   } else {
-    alert("Preço salvo!")
+    alert("Preço salvo com sucesso!")
+    mercadoInput.value = ""
+    precoInput.value = ""
   }
 }
-window.buscarPreco = async function () {
-  const nome = document.getElementById('buscarProduto').value
-  const produto = document.getElementById("busca").value
-  const mercado = document.getElementById("mercadoBusca").value
-  
-  const { data, error } = await supabase
-    .from('precos')
-    .select('*')
-    .ilike('produto', `%${nome}%`)
-    .order('preco', { ascending: true })
 
-  const lista = document.getElementById('resultado')
-  lista.innerHTML = ""
+
+
+// ===============================
+// 🔎 BUSCAR PREÇO
+// ===============================
+window.buscarPreco = async function () {
+
+  const buscaSelect = document.getElementById("buscaProduto")
+
+  if (!buscaSelect) {
+    console.log("Elemento de busca não encontrado")
+    return
+  }
+
+  const produto = buscaSelect.value
+
+  if (!produto) {
+    alert("Selecione um produto para buscar")
+    return
+  }
+
+  const { data, error } = await supabase
+    .from("precos")
+    .select("*")
+    .eq("produto", produto)
 
   if (error) {
+    alert("Erro ao buscar")
     console.log(error)
     return
   }
 
+  const resultadoDiv = document.getElementById("resultado")
+
+  if (!resultadoDiv) {
+    console.log("Div resultado não encontrada")
+    return
+  }
+
+  if (data.length === 0) {
+    resultadoDiv.innerHTML = "Nenhum preço encontrado."
+    return
+  }
+
+  let html = ""
+
   data.forEach(item => {
-    const li = document.createElement('li')
-    li.textContent = `${item.mercado} - R$ ${item.preco}`
-    lista.appendChild(li)
+    html += `
+      <p>
+        <strong>${item.mercado}</strong> - R$ ${item.preco.toFixed(2)}
+      </p>
+    `
   })
+
+  resultadoDiv.innerHTML = html
 }
