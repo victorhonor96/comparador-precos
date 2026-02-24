@@ -16,6 +16,11 @@ window.adicionarPreco = async function () {
     return
   }
 
+if (!produto || !mercado || isNaN(preco)) {
+  alert("Preencha todos os campos corretamente")
+  return
+}
+  
   const { error } = await supabase
     .from('precos')
     .insert([{ produto, mercado, preco }])
