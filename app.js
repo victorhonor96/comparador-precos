@@ -34,7 +34,9 @@ if (!produto || !mercado || isNaN(preco)) {
 }
 window.buscarPreco = async function () {
   const nome = document.getElementById('buscarProduto').value
-
+  const produto = document.getElementById("busca").value
+  const mercado = document.getElementById("mercadoBusca").value
+  
   const { data, error } = await supabase
     .from('precos')
     .select('*')
