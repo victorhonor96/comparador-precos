@@ -26,7 +26,14 @@
 
   <div class="card">
     <h2>Buscar produto</h2>
-    <input type="text" id="buscarProduto" placeholder="Nome do produto">
+    <select id="busca">
+  <option value="">Selecione um produto</option>
+  <option value="Arroz 5kg">Arroz 5kg</option>
+  <option value="Feijão 1kg">Feijão 1kg</option>
+  <option value="Óleo">Óleo</option>
+  <option value="Açúcar 1kg">Açúcar 1kg</option>
+  <option value="Café 0,5kg">Café 0,5kg</option>
+    </select>
     <button onclick="buscarPreco()">Buscar</button>
     <ul id="resultado"></ul>
   </div>
