@@ -11,7 +11,14 @@
 
   <div class="card">
     <h2>Adicionar preço</h2>
-    <input type="text" id="produto" placeholder="Produto">
+    <select id="produto">
+  <option value="">Selecione o produto</option>
+  <option value="Arroz 5kg">Arroz 5kg</option>
+  <option value="Feijão 1kg">Feijão 1kg</option>
+  <option value="Óleo">Óleo</option>
+  <option value="Açúcar 1kg">Açúcar 1kg</option>
+  <option value="Café 0,5kg">Café 0,5kg</option>
+</select>
     <input type="text" id="mercado" placeholder="Mercado">
     <input type="number" id="preco" placeholder="Preço" step="0.01">
     <button onclick="adicionarPreco()">Salvar</button>
