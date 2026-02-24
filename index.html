@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <title>Comparador de Preços</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <h1>Comparador de Preços 🛒</h1>
+
+  <div class="card">
+    <h2>Adicionar preço</h2>
+    <input type="text" id="produto" placeholder="Produto">
+    <input type="text" id="mercado" placeholder="Mercado">
+    <input type="number" id="preco" placeholder="Preço" step="0.01">
+    <button onclick="adicionarPreco()">Salvar</button>
+  </div>
+
+  <div class="card">
+    <h2>Buscar produto</h2>
+    <input type="text" id="buscarProduto" placeholder="Nome do produto">
+    <button onclick="buscarPreco()">Buscar</button>
+    <ul id="resultado"></ul>
+  </div>
+
+  <script type="module" src="app.js"></script>
+</body>
+</html>
