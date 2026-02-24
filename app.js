@@ -21,6 +21,11 @@ window.adicionarPreco = async function () {
   }
 }
 
+if (!produto || !mercado || !preco) {
+  alert("Preencha todos os campos")
+  return
+}
+
 window.buscarPreco = async function () {
   const nome = document.getElementById('buscarProduto').value
 
